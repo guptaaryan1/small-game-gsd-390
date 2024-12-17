@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject winScreen;
     public GameObject loseScreen;
+    public static GameManager Instance;
+    public int pillCount = 1;
 
     private bool gameEnded = false;
 
@@ -28,5 +30,23 @@ public class GameManager : MonoBehaviour
     {
         gameEnded = true;
         loseScreen.SetActive(true);
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void ModifyPillCount(int newCount)
+    {
+        pillCount = Mathf.Max(1, newCount); // Ensure at least one pill remains
+        Debug.Log($"Pill Count: {pillCount}");
     }
 }
